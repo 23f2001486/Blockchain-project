@@ -108,10 +108,20 @@ function App() {
 
 
         <Route
-          path="/higher-admin"
-          element={token && user?.role === "higherAdmin" ? <HigherAdmin /> : <Navigate to="/" />}
-        />
-      </Routes>
+  path="/higher-admin"
+  element={
+    token && user?.role === "higherAdmin" ? (
+      <HigherAdmin
+        account={account}
+        connectMetaMask={connectMetaMask}
+        disconnectMetaMask={disconnectMetaMask}
+      />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
+  </Routes>
     </Router>
   );
 }

@@ -67,22 +67,24 @@ export default function AddComplaintForm({ account, connectMetaMask, disconnectM
   };
 
   return (
-    <div style={{ background: "#fdfcfb", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="d-flex flex-column min-vh-100 bg-light">
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg shadow-sm" style={{ background: "#4e342e" }}>
+     <nav className="navbar navbar-expand-lg shadow-sm" style={{ background: "#3E2723" }}>
         <div className="container-fluid">
           <a className="navbar-brand fw-bold text-white" href="/">
             Hostel Complaint System
-            <div style={{ fontSize: "0.8rem", color: "#d7ccc8" }}>
-              Voice your issues, get them resolved ✨
+            <div style={{ fontSize: "0.8rem", fontWeight: "normal", color: "#c7b9b5" }}>
+              Voice your issues, get them resolved
             </div>
           </a>
-
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
-              <li className="nav-item"><a className="nav-link text-white" href="/dashboard">Dashboard</a></li>
-              <li className="nav-item"><a className="nav-link active fw-bold text-warning" href="/add-complaint">Add Complaint</a></li>
-              <li className="nav-item"><a className="nav-link text-white" href="/my-complaints">My Complaints</a></li>
+              <li className="nav-item">
+                <a className="nav-link text-white fw-semibold" href="/dashboard">Dashboard</a>
+              </li>
+              <li className="nav-item">
+                <a className="nav-link text-white fw-semibold" href="/add-complaint">Add Complaint</a>
+              </li>
             </ul>
             <div className="ms-3">
               {account ? (
@@ -105,56 +107,105 @@ export default function AddComplaintForm({ account, connectMetaMask, disconnectM
       </nav>
 
       {/* Complaint Form Section */}
-      <div className="container my-5">
+      <div className="container my-5 flex-grow-1">
         <div className="row g-4">
           {/* Left: Form */}
           <div className="col-lg-7">
-            <div className="card shadow-lg border-0 rounded-4">
-              <div className="card-body p-4" style={{ background: "#fffaf5" }}>
-                <h3 className="mb-3 text-center text-brown fw-bold">📝 Submit a Complaint</h3>
-                <p className="text-muted text-center">Fill in the details below to raise a complaint</p>
+            <div className="card shadow border-0 rounded-3">
+              <div className="card-body p-4">
+                <h3 className="mb-3 text-center fw-bold" style={{ color: "#3E2723" }}>
+                  Submit a Complaint
+                </h3>
+                <p className="text-muted text-center">
+                  Fill in the details below to raise a complaint
+                </p>
 
                 <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="col-md-6 mb-3">
-                      <label className="form-label fw-semibold">Image URL (optional)</label>
-                      <input type="text" name="image" value={form.image} onChange={handleChange} className="form-control rounded-3" placeholder="https://example.com/image.jpg" />
+                      <label className="form-label">Image URL (optional)</label>
+                      <input
+                        type="text"
+                        name="image"
+                        value={form.image}
+                        onChange={handleChange}
+                        className="form-control"
+                        placeholder="https://example.com/image.jpg"
+                      />
                     </div>
                     <div className="col-md-6 mb-3">
-                      <label className="form-label fw-semibold">Category</label>
-                      <select name="category" value={form.category} onChange={handleChange} className="form-select rounded-3" required>
+                      <label className="form-label">Category</label>
+                      <select
+                        name="category"
+                        value={form.category}
+                        onChange={handleChange}
+                        className="form-select"
+                        required
+                      >
                         <option value="">Select Category</option>
-                        <option value="Water">🚰 Water</option>
-                        <option value="Electricity">💡 Electricity</option>
-                        <option value="Cleanliness">🧹 Cleanliness</option>
-                        <option value="Internet">🌐 Internet</option>
-                        <option value="Other">📌 Other</option>
+                        <option value="Water">Water</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Cleanliness">Cleanliness</option>
+                        <option value="Internet">Internet</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                   </div>
 
                   <div className="mb-3">
-                    <label className="form-label fw-semibold">Complaint Text</label>
-                    <textarea name="text" value={form.text} onChange={handleChange} className="form-control rounded-3" rows="3" placeholder="Describe your issue..." required />
+                    <label className="form-label">Complaint Text</label>
+                    <textarea
+                      name="text"
+                      value={form.text}
+                      onChange={handleChange}
+                      className="form-control"
+                      rows="3"
+                      placeholder="Describe your issue..."
+                      required
+                    />
                   </div>
 
                   <div className="row">
                     <div className="col-md-4 mb-3">
-                      <label className="form-label fw-semibold">Block Name</label>
-                      <input type="text" name="blockName" value={form.blockName} onChange={handleChange} className="form-control rounded-3" required />
+                      <label className="form-label">Block Name</label>
+                      <input
+                        type="text"
+                        name="blockName"
+                        value={form.blockName}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
                     </div>
                     <div className="col-md-4 mb-3">
-                      <label className="form-label fw-semibold">Floor No</label>
-                      <input type="number" name="floorNo" value={form.floorNo} onChange={handleChange} className="form-control rounded-3" required />
+                      <label className="form-label">Floor No</label>
+                      <input
+                        type="number"
+                        name="floorNo"
+                        value={form.floorNo}
+                        onChange={handleChange}
+                        className="form-control"
+                        required
+                      />
                     </div>
                     <div className="col-md-4 mb-3">
-                      <label className="form-label fw-semibold">Room No (optional)</label>
-                      <input type="text" name="roomNo" value={form.roomNo} onChange={handleChange} className="form-control rounded-3" />
+                      <label className="form-label">Room No (optional)</label>
+                      <input
+                        type="text"
+                        name="roomNo"
+                        value={form.roomNo}
+                        onChange={handleChange}
+                        className="form-control"
+                      />
                     </div>
                   </div>
 
-                  <button type="submit" className="btn w-100 mt-3 py-2 rounded-3 fw-semibold" style={{ background: "#4e342e", color: "white" }}>
-                    🚀 Submit Complaint
+                  <button
+                    type="submit"
+                    className="btn w-100 mt-3 py-2 fw-semibold text-white"
+                    style={{ backgroundColor: "#3E2723" }}
+                  >
+                    Submit Complaint
                   </button>
                 </form>
               </div>
@@ -163,13 +214,18 @@ export default function AddComplaintForm({ account, connectMetaMask, disconnectM
 
           {/* Right: Preview */}
           <div className="col-lg-5">
-            <div className="card shadow-lg border-0 rounded-4 h-100">
-              <div className="card-body p-4 text-center" style={{ background: "#fbe9e7" }}>
-                <h5 className="fw-bold mb-3">📸 Live Preview</h5>
+            <div className="card shadow border-0 rounded-3 h-100">
+              <div className="card-body p-4 text-center bg-light">
+                <h5 className="fw-bold mb-3">Live Preview</h5>
                 {form.image ? (
-                  <img src={form.image} alt="Preview" className="img-fluid rounded-3 shadow-sm mb-3" style={{ maxHeight: "200px", objectFit: "cover" }} />
+                  <img
+                    src={form.image}
+                    alt="Preview"
+                    className="img-fluid rounded mb-3"
+                    style={{ maxHeight: "200px", objectFit: "cover" }}
+                  />
                 ) : (
-                  <div className="p-4 bg-light rounded-3 border border-dashed text-muted">
+                  <div className="p-4 bg-white rounded border text-muted">
                     No image uploaded
                   </div>
                 )}
@@ -185,8 +241,8 @@ export default function AddComplaintForm({ account, connectMetaMask, disconnectM
       </div>
 
       {/* Footer */}
-      <footer className="mt-auto text-center py-3" style={{ background: "#4e342e", color: "white" }}>
-        <small>© {new Date().getFullYear()} Hostel Complaint System · Made with 🤎</small>
+       <footer className="mt-auto text-center py-3" style={{ background: "#3E2723", color: "white" }}>
+        <small>© {new Date().getFullYear()} Hostel Complaint System · All rights reserved</small>
       </footer>
     </div>
   );

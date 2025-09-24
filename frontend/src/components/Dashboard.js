@@ -13,7 +13,6 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
   useEffect(() => {
     const loadContractAndData = async () => {
       if (!window.ethereum || !account) return;
-
       try {
         const res = await axios.get("/api/contract/abi");
         const { abi } = res.data;
@@ -33,7 +32,6 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
         console.error("Error loading contract or complaints:", err);
       }
     };
-
     loadContractAndData();
   }, [account]);
 
@@ -54,7 +52,7 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
         .submitReview(id, satisfied, feedback)
         .send({ from: account });
 
-      alert("✅ Review submitted successfully!");
+      alert("Review submitted successfully!");
 
       const allComplaints = await contract.methods.getAllComplaints().call();
       const myComplaints = allComplaints.filter(
@@ -63,7 +61,7 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
       setComplaints(myComplaints);
     } catch (err) {
       console.error("Error submitting review:", err);
-      alert("❌ Transaction failed.");
+      alert("Transaction failed.");
     }
   };
 
@@ -90,17 +88,16 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
     });
 
   return (
-    <div style={{ background: "#fdf6f2", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+    <div style={{ background: "#fafafa", minHeight: "100vh", display: "flex", flexDirection: "column" }}>
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg shadow" style={{ background: "#5D4037" }}>
+      <nav className="navbar navbar-expand-lg shadow-sm" style={{ background: "#3E2723" }}>
         <div className="container-fluid">
           <a className="navbar-brand fw-bold text-white" href="/">
             Hostel Complaint System
-            <div style={{ fontSize: "0.8rem", fontWeight: "normal", color: "#d7ccc8" }}>
-              Voice your issues, get them resolved ✨
+            <div style={{ fontSize: "0.8rem", fontWeight: "normal", color: "#c7b9b5" }}>
+              Voice your issues, get them resolved
             </div>
           </a>
-
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
@@ -108,9 +105,6 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
               </li>
               <li className="nav-item">
                 <a className="nav-link text-white fw-semibold" href="/add-complaint">Add Complaint</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-white fw-semibold" href="/my-complaints">My Complaints</a>
               </li>
             </ul>
             <div className="ms-3">
@@ -134,17 +128,17 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
       </nav>
 
       {/* Main Content */}
-      <div className="container d-flex justify-content-center mt-3 mb-4 flex-grow-1">
-        <div className="card shadow-sm border-0 rounded-3 w-100" style={{ maxWidth: "900px" }}>
+      <div className="container-fluid mt-4 mb-5 flex-grow-1">
+        <div className="card shadow-sm border-0 rounded-3 w-100">
           <div className="card-body p-4">
-            <h4 className="fw-bold mb-3">📋 My Complaints</h4>
+            <h4 className="fw-bold mb-3">My Complaints</h4>
 
             {/* Search + Sort */}
             <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
               <input
                 type="text"
                 className="form-control me-2 mb-2"
-                placeholder="🔍 Search by text, block, category..."
+                placeholder="Search by text, block, category..."
                 style={{ flex: "1 1 auto", maxWidth: "65%" }}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -165,7 +159,7 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
                   className="btn btn-sm btn-outline-dark ms-2"
                   onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
                 >
-                  {sortOrder === "asc" ? "⬆️" : "⬇️"}
+                  {sortOrder === "asc" ? "▲" : "▼"}
                 </button>
               </div>
             </div>
@@ -175,10 +169,10 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
               <p className="text-muted">No complaints filed yet.</p>
             ) : (
               <div className="table-responsive">
-                <table className="table table-striped table-hover align-middle">
-                  <thead className="table-light">
+                <table className="table table-bordered table-hover align-middle">
+                  <thead className="table-dark">
                     <tr>
-                      <th>#</th>
+                      <th>ID</th>
                       <th>Text</th>
                       <th>Block</th>
                       <th>Floor</th>
@@ -210,26 +204,36 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
                             {["Pending", "InProgress", "Completed"][Number(c[8])]}
                           </span>
                         </td>
-                        <td>
-                          {Number(c[8]) === 2 ? (
-                            <div>
-                              <button
-                                className="btn btn-success btn-sm me-2"
-                                onClick={() => handleReview(c[0], true)}
-                              >
-                                ✅ Satisfied
-                              </button>
-                              <button
-                                className="btn btn-danger btn-sm"
-                                onClick={() => handleReview(c[0], false)}
-                              >
-                                ❌ Unsatisfied
-                              </button>
-                            </div>
-                          ) : (
-                            <span className="text-muted">N/A</span>
-                          )}
-                        </td>
+<td>
+  {Number(c[8]) === 2 ? (
+    c[11] && c[11].length > 0 ? (
+      // Feedback already submitted → show last feedback
+      <span className="text-success fw-semibold">
+        {c[11][c[11].length - 1]}
+      </span>
+    ) : (
+      // No feedback yet → show buttons
+      <div>
+        <button
+          className="btn btn-success btn-sm me-2"
+          onClick={() => handleReview(c[0], true)}
+        >
+          Satisfied
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => handleReview(c[0], false)}
+        >
+          Unsatisfied
+        </button>
+      </div>
+    )
+  ) : (
+    <span className="text-muted">N/A</span>
+  )}
+</td>
+
+
                       </tr>
                     ))}
                   </tbody>
@@ -241,8 +245,8 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
       </div>
 
       {/* Footer */}
-      <footer className="mt-auto text-center py-2" style={{ background: "#5D4037", color: "white" }}>
-        <small>© {new Date().getFullYear()} Hostel Complaint System · Made with 🤎</small>
+      <footer className="mt-auto text-center py-3" style={{ background: "#3E2723", color: "white" }}>
+        <small>© {new Date().getFullYear()} Hostel Complaint System · All rights reserved</small>
       </footer>
     </div>
   );

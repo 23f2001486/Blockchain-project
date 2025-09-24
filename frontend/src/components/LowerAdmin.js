@@ -87,30 +87,36 @@ export default function LowerAdmin({ account, connectMetaMask, disconnectMetaMas
   return (
     <div className="min-vh-100 bg-white d-flex flex-column">
       {/* Navbar */}
-      <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#5D4037" }}>
-        <div className="container">
-          <span className="navbar-brand fw-bold text-white">Hostel Complaint Admin</span>
-          <div className="ms-auto d-flex align-items-center gap-2">
-            {account ? (
-              <>
-                <span className="badge bg-light text-dark">
-                  {account.slice(0, 6)}...{account.slice(-4)}
-                </span>
-                <button
-                  className="btn btn-outline-light btn-sm"
-                  onClick={disconnectMetaMask}
-                >
-                  Disconnect
+      <nav className="navbar navbar-expand-lg shadow-sm" style={{ background: "#3E2723" }}>
+        <div className="container-fluid">
+          <a className="navbar-brand fw-bold text-white" href="/">
+            Hostel Complaint System (Lower Admin)
+            <div style={{ fontSize: "0.8rem", fontWeight: "normal", color: "#c7b9b5" }}>
+              Voice your issues, get them resolved
+            </div>
+          </a>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <a className="nav-link text-white fw-semibold" href="/lower-admin">Admin Dashboard</a>
+              </li>
+            </ul>
+            <div className="ms-3">
+              {account ? (
+                <div className="d-flex align-items-center">
+                  <span className="badge bg-light text-dark me-2">
+                    {account.slice(0, 6)}...{account.slice(-4)}
+                  </span>
+                  <button className="btn btn-outline-light btn-sm" onClick={disconnectMetaMask}>
+                    Disconnect
+                  </button>
+                </div>
+              ) : (
+                <button className="btn btn-warning btn-sm" onClick={connectMetaMask}>
+                  Connect MetaMask
                 </button>
-              </>
-            ) : (
-              <button
-                className="btn btn-warning btn-sm"
-                onClick={connectMetaMask}
-              >
-                Connect MetaMask
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </nav>
@@ -202,11 +208,13 @@ export default function LowerAdmin({ account, connectMetaMask, disconnectMetaMas
                     )}
                   </div>
 
-                  {c.feedbacks.length > 0 && (
-                    <p className="mt-2 mb-0 text-muted small">
-                      <strong>Last Feedback:</strong> {c.feedbacks[c.feedbacks.length - 1]}
-                    </p>
-                  )}
+                  <p className="mt-2 mb-0 text-muted small">
+  <strong>Feedback:</strong>{" "}
+  {c.feedbacks.length > 0
+    ? c.feedbacks[c.feedbacks.length - 1]
+    : "Feedback not received"}
+</p>
+
                 </div>
               </div>
             </div>
@@ -215,8 +223,8 @@ export default function LowerAdmin({ account, connectMetaMask, disconnectMetaMas
       </div>
 
       {/* Footer */}
-      <footer className="text-center text-white py-3 mt-4" style={{ backgroundColor: "#5D4037" }}>
-        Hostel Complaint Management System © {new Date().getFullYear()}
+      <footer className="mt-auto text-center py-3" style={{ background: "#3E2723", color: "white" }}>
+        <small>© {new Date().getFullYear()} Hostel Complaint System · All rights reserved</small>
       </footer>
     </div>
   );
