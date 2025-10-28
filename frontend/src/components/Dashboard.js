@@ -132,6 +132,10 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
         <div className="card shadow-sm border-0 rounded-3 w-100">
           <div className="card-body p-4">
             <h4 className="fw-bold mb-3">My Complaints</h4>
+            <p className="text-muted fst-italic mb-3">
+  Only click “Unsatisfied” if your issue isn’t resolved. If you’re satisfied, no action is needed.
+</p>
+
 
             {/* Search + Sort */}
             <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
@@ -207,31 +211,27 @@ export default function Dashboard({ account, connectMetaMask, disconnectMetaMask
 <td>
   {Number(c[8]) === 2 ? (
     c[11] && c[11].length > 0 ? (
-      // Feedback already submitted → show last feedback
       <span className="text-success fw-semibold">
         {c[11][c[11].length - 1]}
       </span>
     ) : (
-      // No feedback yet → show buttons
       <div>
-        <button
-          className="btn btn-success btn-sm me-2"
-          onClick={() => handleReview(c[0], true)}
-        >
-          Satisfied
-        </button>
         <button
           className="btn btn-danger btn-sm"
           onClick={() => handleReview(c[0], false)}
         >
           Unsatisfied
         </button>
+        <div className="small text-muted mt-1">
+          *Do not click if you’re satisfied with the resolution.
+        </div>
       </div>
     )
   ) : (
     <span className="text-muted">N/A</span>
   )}
 </td>
+
 
 
                       </tr>

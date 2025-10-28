@@ -110,6 +110,7 @@ export default function HigherAdmin({ account, connectMetaMask, disconnectMetaMa
               Voice your issues, get them resolved
             </div>
           </a>
+          <a className="navbar-brand fw-bold text-white" href="/adminannouncement">Announcement</a>
           <div className="collapse navbar-collapse">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">

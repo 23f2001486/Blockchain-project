@@ -4,7 +4,11 @@ import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import LowerAdmin from "./components/LowerAdmin";
 import HigherAdmin from "./components/HigherAdmin";
+import AdminAnnouncement from "./components/AdminAnnouncement";
+import EditAnnouncement from "./components/editAnnouncement";
+import AddAnnouncement from "./components/addAnnouncement";
 import OAuthRedirect from "./components/OAuthRedirect";
+import WifiLogin from "./components/WifiLogin"; // Adjust the path according to your folder structure
 import { AuthContext } from "./context/AuthContext";
 import AddComplaintForm from "./components/AddComplaint";
 
@@ -105,6 +109,45 @@ function App() {
     )
   }
 />
+{/* Admin Announcement List */}
+<Route
+  path="/adminannouncement"
+  element={
+    token && user?.role === "higherAdmin" ? (
+      <AdminAnnouncement
+        account={account}
+        connectMetaMask={connectMetaMask}
+        disconnectMetaMask={disconnectMetaMask}
+      />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
+
+{/* Add New Announcement */}
+<Route
+  path="/add-announcement"
+  element={
+    token && user?.role === "higherAdmin" ? (
+      <AddAnnouncement />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
+
+{/* Edit Announcement */}
+<Route
+  path="/edit-announcement/:id"
+  element={
+    token && user?.role === "higherAdmin" ? (
+      <EditAnnouncement />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
 
 
         <Route
@@ -121,6 +164,21 @@ function App() {
     )
   }
 />
+<Route
+  path="/wifi-login"
+  element={
+    token && user?.role === "student" ? (
+      <WifiLogin
+        account={account}
+        connectMetaMask={connectMetaMask}
+        disconnectMetaMask={disconnectMetaMask}
+      />
+    ) : (
+      <Navigate to="/" />
+    )
+  }
+/>
+
   </Routes>
     </Router>
   );

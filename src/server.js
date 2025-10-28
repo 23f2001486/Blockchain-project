@@ -7,7 +7,10 @@ import passport from "passport";
 import session from "express-session";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import authRoutes from "./routes/auth.js";
+import announcementRouter from "./routes/announcementRoutes.js";
 import User from "./models/User.js";
+import wifi from "./models/Wifi.js";
+import { checkWifiCredentials } from "./controllers/wifiController.js";
 import fs from "fs/promises"; // Use promise-based fs for async/await
 
 // Load env variables
@@ -68,12 +71,12 @@ passport.use(
 
 // Auth routes
 app.use("/auth", authRoutes);
-
+app.use("/api/announcement",announcementRouter);
 // ----------------------
 // Contract ABI endpoint
 // ----------------------
 
-
+app.post("/api/wifi/check", checkWifiCredentials);
 app.get("/api/contract/abi", async (req, res) => {
   try {
     const contractPath = path.join(
@@ -109,3 +112,30 @@ app.get("/*path", (req, res) => {
 // Start server
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Server running on port ${port}`));
+async function addMultipleWifi() {
+  try {
+    const wifiEntries = await wifi.create([
+      {
+        email: "divyaprabagaran2006@gmail.com",
+        wifiName: "HomeWiFi1",
+        wifiPassword: "Password1"
+      },
+      {
+        email: "kalpanaprabagaran77@gmail.com",
+        wifiName: "HomeWiFi2",
+        wifiPassword: "Password2"
+      },
+      {
+        email: "pkalpanabalu@gmail.com",
+        wifiName: "HomeWiFi3",
+        wifiPassword: "Password3"
+      }
+    ]);
+
+    console.log("Inserted:", wifiEntries);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+addMultipleWifi();
